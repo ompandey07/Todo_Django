@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/static/notes.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>TaskHub</title>
+
+    <style>
+        input{
+            border: transparent;
+            outline: none;
+            background-color: transparent;
+        }
+    </style>
+
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-8"> TaskHub</h1>
+        <div class="max-w-md mx-auto">
+            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="todoInput">Add a Todo:</label>
+                    <input name="user_input" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  type="text" placeholder="Type Something To Add">
+                </div>
+                <div class="flex items-center justify-center">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Add Todo
+                    </button>
+                </div>
+            </form>
+            
+            <div id="todoList" class="bg-white shadow-md rounded px-8 py-6">
+                {% for data in show_data %}
+                <div class="flex items-center justify-between mb-4 border-b pb-4">
+                    <div class="text-gray-700 text-base">
+                        <span>{{data.user_input}}</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <a href="{% url "edit" data.id %}" class="text-blue-800 hover:text-blue-700">
+                            <i class="ri-edit-box-line"></i>
+                        </a>
+                        <a href="{% url "delete" data.id %}" class="text-red-500 hover:text-red-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"  ></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}            
+            </div>
+        </div>
+    </div>
+</body>
+</html>
